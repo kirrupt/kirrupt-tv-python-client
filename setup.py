@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-VERSION = __import__("kirrupt_tv").__version__
+VERSION = '0.1'
 
 setup(
     name='kirrupt-tv',
@@ -10,6 +10,8 @@ setup(
     description='A Python client for the Kirrupt TV API.',
     install_requires=[
         'requests',
+        'pytz',
+        'email'
     ],
     author='Kirrupt',
     author_email='info@kirrupt.com',

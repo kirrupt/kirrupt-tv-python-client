@@ -2,9 +2,6 @@ import requests
 
 from kirrupt_tv.errors import APIError
 
-
-__version__ = '0.1'
-
 API_URL = 'https://kirrupt.com/tv/api/'
 
 
@@ -12,7 +9,7 @@ class Client(object):
 
     """Base API client."""
 
-    def __init__(self, url=None, version=__version__):
+    def __init__(self, url=None, version=None):
         self.url = url
         self.version = version
 
