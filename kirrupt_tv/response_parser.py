@@ -1,4 +1,4 @@
-from kirrupt_tv.models import UserShow, Episode, Show
+from kirrupt_tv.models import UserShow, Episode, Show, WatchedEpisode
 import datetime
 import email
 import pytz
@@ -65,6 +65,7 @@ class ResponseParser:
                 self.date = None
                 self.since = None
                 self.user_shows = []
+                self.watched_episodes = []
 
         we = WatchedEpisodesChangesForUser()
 
@@ -83,6 +84,16 @@ class ResponseParser:
                 us.show_id = obj['show_id']
 
                 we.user_shows.append(us)
+
+            for obj in response['watched_episodes']:
+                fields = ['episode_id', 'status']
+
+                date_fields = ['modified']
+
+                we.watched_episodes.append(
+                    self._object_from_json(WatchedEpisode, obj,
+                                           fields=fields,
+                                           date_fields=date_fields))
         except:
             return None
 

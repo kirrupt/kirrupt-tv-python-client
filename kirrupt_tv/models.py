@@ -8,3 +8,7 @@ class Episode:
 
 class Show:
     pass
+
+
+class WatchedEpisode:
+    pass
