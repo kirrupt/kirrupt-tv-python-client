@@ -1,6 +1,6 @@
 import requests
 
-from kirrupt_tv.errors import APIError
+from kirrupt_tv.errors import APIError, WrongCredentials
 
 API_URL = 'https://kirrupt.com/tv/api/'
 
@@ -17,6 +17,10 @@ class Client(object):
         "Makes HTTP request to the server."
 
         response = request('%s%s' % (API_URL, url), **kwargs)
+
+        if response.status_code == 401:
+            raise WrongCredentials("Wrong credentials.")
+
         if response.headers.get('content-type') == 'application/json':
             try:
                 return response.json()
@@ -59,6 +63,19 @@ class Client(object):
 
     def trending(self):
         return self._request('get', 'trending')
+
+    def ping(self):
+        return self._request('get', 'ping')
+
+    def add_show(self, show_id):
+        return self._request('get', 'add-show/%d' % show_id)
+
+    def mark_as_watched(self, episode_id):
+        return self._request('get', 'mark-as-watched/%d' % episode_id)
+
+    def mark_as_unwatched(self, episode_id):
+        return self._request('get', 'mark-as-unwatched/%d' % episode_id)
+
 
 
 class BasicAuthClient(Client):
