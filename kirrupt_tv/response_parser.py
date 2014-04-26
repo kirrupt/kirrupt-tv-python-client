@@ -77,17 +77,16 @@ class ResponseParser:
                 date_string_fields=['date', 'since'])
 
             for obj in response['user_shows']:
-                us = UserShow()
+                fields = ['ignored', 'show_id']
+                date_fields = ['modified']
 
-                us.ignored = obj['ignored']
-                us.modified = obj['modified']
-                us.show_id = obj['show_id']
-
-                we.user_shows.append(us)
+                we.user_shows.append(
+                    self._object_from_json(UserShow, obj,
+                                           fields=fields,
+                                           date_fields=date_fields))
 
             for obj in response['watched_episodes']:
                 fields = ['episode_id', 'status']
-
                 date_fields = ['modified']
 
                 we.watched_episodes.append(
